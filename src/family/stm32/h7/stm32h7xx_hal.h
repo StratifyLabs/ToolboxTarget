@@ -174,10 +174,10 @@ typedef struct {
 /*
  * @brief FLASH Global Defines
  */
-#define FLASH_SECTOR_TOTAL 1U          /* 1 sector */
-#define FLASH_SECTOR_SIZE 0x00020000UL /* 128 KB */
-#define FLASH_SIZE FLASH_SECTOR_SIZE   /* 128 KB */
-#define FLASH_BANK_SIZE FLASH_SIZE     /* 128 KB */
+//#define FLASH_SECTOR_TOTAL 1U          /* 1 sector */
+//#define FLASH_SECTOR_SIZE 0x00020000UL /* 128 KB */
+//#define FLASH_SIZE FLASH_SECTOR_SIZE   /* 128 KB */
+//#define FLASH_BANK_SIZE FLASH_SIZE     /* 128 KB */
 #define FLASH_LATENCY_DEFAULT                                                  \
   FLASH_ACR_LATENCY_7WS                    /* FLASH Seven Latency cycles */
 #define FLASH_NB_32BITWORD_IN_FLASHWORD 8U /* 256 bits */

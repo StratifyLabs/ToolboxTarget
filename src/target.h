@@ -20,6 +20,8 @@ typedef struct {
 typedef struct {
   uint32_t device_id;
   uint8_t device_name[32]; //name of the device
+  uint32_t unique_id[8];
+  uint32_t flash_size;            // total flash size in KB
   uint32_t flash_page_table[256]; //flash page sizes in KB
   uint32_t ram_work_address;
   uint32_t ram_work_size;

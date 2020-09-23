@@ -5,9 +5,12 @@
 void target_family_populate_info(){
   //interrogate the device to see which in the family it is
   target_startup.info.device_id = DBGMCU->IDCODE;
+
   target_startup.info.flash_page_table[0] = 128;
+
   target_startup.info.ram_work_address = 0x10000000;
   target_startup.info.ram_work_size = 0x8000;
+  target_startup.info.flash_size = *((uint32_t *)(FLASHSIZE_BASE));
 }
 
 uint32_t target_family_erase_sector(uint32_t bank, uint32_t sector){
