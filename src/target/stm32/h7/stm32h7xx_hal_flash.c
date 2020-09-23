@@ -15,8 +15,8 @@
   ==============================================================================
 
   [..] The Flash memory interface manages CPU AXI I-Code and D-Code accesses
-       to the Flash memory. It implements the erase and program Flash memory operations
-       and the read and write protection mechanisms.
+       to the Flash memory. It implements the erase and program Flash memory
+ operations and the read and write protection mechanisms.
 
   [..] The FLASH main features are:
       (+) Flash memory read operations
@@ -29,8 +29,8 @@
                         ##### How to use this driver #####
  ==============================================================================
     [..]
-      This driver provides functions and macros to configure and program the FLASH
-      memory of all STM32H7xx devices.
+      This driver provides functions and macros to configure and program the
+ FLASH memory of all STM32H7xx devices.
 
       (#) FLASH Memory IO Programming functions:
            (++) Lock and Unlock the FLASH interface using HAL_FLASH_Unlock() and
@@ -42,33 +42,33 @@
 
       (#) Interrupts and flags management functions :
            (++) Handle FLASH interrupts by calling HAL_FLASH_IRQHandler()
-           (++) Callback functions are called when the flash operations are finished :
-                HAL_FLASH_EndOfOperationCallback() when everything is ok, otherwise
+           (++) Callback functions are called when the flash operations are
+ finished : HAL_FLASH_EndOfOperationCallback() when everything is ok, otherwise
                 HAL_FLASH_OperationErrorCallback()
            (++) Get error flag status by calling HAL_FLASH_GetError()
 
       (#) Option bytes management functions :
            (++) Lock and Unlock the option bytes using HAL_FLASH_OB_Unlock() and
                 HAL_FLASH_OB_Lock() functions
-           (++) Launch the reload of the option bytes using HAL_FLASH_OB_Launch() function.
-                In this case, a reset is generated
+           (++) Launch the reload of the option bytes using
+ HAL_FLASH_OB_Launch() function. In this case, a reset is generated
     [..]
-      In addition to these functions, this driver includes a set of macros allowing
-      to handle the following operations:
+      In addition to these functions, this driver includes a set of macros
+ allowing to handle the following operations:
        (+) Set the latency
        (+) Enable/Disable the FLASH interrupts
        (+) Monitor the FLASH flags status
      [..]
-    (@) For any Flash memory program operation (erase or program), the CPU clock frequency
-        (HCLK) must be at least 1MHz.
-    (@) The contents of the Flash memory are not guaranteed if a device reset occurs during
-        a Flash memory operation.
-    (@) The application can simultaneously request a read and a write operation through each AXI
-        interface.
-        As the Flash memory is divided into two independent banks, the embedded Flash
-        memory interface can drive different operations at the same time on each bank. For
-        example a read, write or erase operation can be executed on bank 1 while another read,
-        write or erase operation is executed on bank 2.
+    (@) For any Flash memory program operation (erase or program), the CPU clock
+ frequency (HCLK) must be at least 1MHz.
+    (@) The contents of the Flash memory are not guaranteed if a device reset
+ occurs during a Flash memory operation.
+    (@) The application can simultaneously request a read and a write operation
+ through each AXI interface. As the Flash memory is divided into two independent
+ banks, the embedded Flash memory interface can drive different operations at
+ the same time on each bank. For example a read, write or erase operation can be
+ executed on bank 1 while another read, write or erase operation is executed on
+ bank 2.
 
  @endverbatim
   ******************************************************************************
@@ -86,7 +86,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32h7xx_hal.h"
+#include "stm32h7xx_hal_flash.h"
 
 /** @addtogroup STM32H7xx_HAL_Driver
   * @{
@@ -151,9 +151,6 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t FlashAddress,
   uint32_t bank;
   uint8_t row_index = FLASH_NB_32BITWORD_IN_FLASHWORD;
 
-  /* Check the parameters */
-  assert_param(IS_FLASH_TYPEPROGRAM(TypeProgram));
-  assert_param(IS_FLASH_PROGRAM_ADDRESS(FlashAddress));
 
   /* Process Locked */
   __HAL_LOCK(&pFlash);
@@ -164,7 +161,7 @@ HAL_StatusTypeDef HAL_FLASH_Program(uint32_t TypeProgram, uint32_t FlashAddress,
   if(IS_FLASH_PROGRAM_ADDRESS_BANK1(FlashAddress))
 #endif /* FLASH_OPTCR_PG_OTP */
   {
-    bank = stm32;
+    bank = FLASH_BANK_1;
   }
   else
   {
@@ -648,8 +645,7 @@ void HAL_FLASH_IRQHandler(void)
   *                  Program: Address which was selected for data program
   * @retval None
   */
-__weak void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue)
-{
+__weak void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue) {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(ReturnValue);
 

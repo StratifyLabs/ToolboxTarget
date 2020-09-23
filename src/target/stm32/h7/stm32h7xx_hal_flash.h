@@ -27,55 +27,59 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32h7xx.h"
+#include "stm32h7xx_hal.h"
 
-/** @addtogroup STM32H7xx_HAL_Driver
+ /** @addtogroup STM32H7xx_HAL_Driver
   * @{
   */
 
-/** @addtogroup FLASH
+ /** @addtogroup FLASH
   * @{
   */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup FLASH_Exported_Types FLASH Exported Types
+ /* Exported types
+  * ------------------------------------------------------------*/
+ /** @defgroup FLASH_Exported_Types FLASH Exported Types
   * @{
   */
 
-/**
+ /**
   * @brief  FLASH Procedure structure definition
   */
-typedef enum
-{
-  FLASH_PROC_NONE = 0U,
-  FLASH_PROC_SECTERASE_BANK1,
-  FLASH_PROC_MASSERASE_BANK1,
-  FLASH_PROC_PROGRAM_BANK1,
-  FLASH_PROC_SECTERASE_BANK2,
-  FLASH_PROC_MASSERASE_BANK2,
-  FLASH_PROC_PROGRAM_BANK2,
-  FLASH_PROC_ALLBANK_MASSERASE
-} FLASH_ProcedureTypeDef;
+ typedef enum {
+   FLASH_PROC_NONE = 0U,
+   FLASH_PROC_SECTERASE_BANK1,
+   FLASH_PROC_MASSERASE_BANK1,
+   FLASH_PROC_PROGRAM_BANK1,
+   FLASH_PROC_SECTERASE_BANK2,
+   FLASH_PROC_MASSERASE_BANK2,
+   FLASH_PROC_PROGRAM_BANK2,
+   FLASH_PROC_ALLBANK_MASSERASE
+ } FLASH_ProcedureTypeDef;
 
-
-/**
+ /**
   * @brief  FLASH handle Structure definition
   */
-typedef struct
-{
-  __IO FLASH_ProcedureTypeDef ProcedureOnGoing;   /*!< Internal variable to indicate which procedure is ongoing or not in IT context */
+ typedef struct {
+   __IO FLASH_ProcedureTypeDef
+     ProcedureOnGoing; /*!< Internal variable to indicate which procedure is
+                          ongoing or not in IT context */
 
-  __IO uint32_t               NbSectorsToErase;   /*!< Internal variable to save the remaining sectors to erase in IT context        */
+   __IO uint32_t NbSectorsToErase; /*!< Internal variable to save the remaining
+                                      sectors to erase in IT context        */
 
-  __IO uint32_t               VoltageForErase;    /*!< Internal variable to provide voltage range selected by user in IT context     */
+   __IO uint32_t VoltageForErase; /*!< Internal variable to provide voltage
+                                     range selected by user in IT context     */
 
-  __IO uint32_t               Sector;             /*!< Internal variable to define the current sector which is erasing               */
+   __IO uint32_t Sector; /*!< Internal variable to define the current sector
+                            which is erasing               */
 
-  __IO uint32_t               Address;            /*!< Internal variable to save address selected for program                        */
+   __IO uint32_t
+     Address; /*!< Internal variable to save address selected for program */
 
-  HAL_LockTypeDef             Lock;               /*!< FLASH locking object                                                          */
+   HAL_LockTypeDef Lock; /*!< FLASH locking object */
 
-  __IO uint32_t               ErrorCode;          /*!< FLASH error code                                                              */
+   __IO uint32_t ErrorCode; /*!< FLASH error code */
 
 }FLASH_ProcessTypeDef;
 

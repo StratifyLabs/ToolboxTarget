@@ -26,42 +26,46 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32h7xx_hal_flash.h"
 
-/** @addtogroup STM32H7xx_HAL_Driver
+ /** @addtogroup STM32H7xx_HAL_Driver
   * @{
   */
 
-/** @addtogroup FLASHEx
+ /** @addtogroup FLASHEx
   * @{
   */
 
-/* Exported types ------------------------------------------------------------*/
-/** @defgroup FLASHEx_Exported_Types FLASH Exported Types
+ /* Exported types
+  * ------------------------------------------------------------*/
+ /** @defgroup FLASHEx_Exported_Types FLASH Exported Types
   * @{
   */
 
-/**
+ /**
   * @brief  FLASH Erase structure definition
   */
-typedef struct
-{
-  uint32_t TypeErase;   /*!< Mass erase or sector Erase.
-                             This parameter can be a value of @ref FLASHEx_Type_Erase */
+ typedef struct {
+   uint32_t
+     TypeErase; /*!< Mass erase or sector Erase.
+                     This parameter can be a value of @ref FLASHEx_Type_Erase */
 
-  uint32_t Banks;       /*!< Select banks to erase when Mass erase is enabled.
-                             This parameter must be a value of @ref FLASHEx_Banks */
+   uint32_t Banks; /*!< Select banks to erase when Mass erase is enabled.
+                        This parameter must be a value of @ref FLASHEx_Banks */
 
-  uint32_t Sector;      /*!< Initial FLASH sector to erase when Mass erase is disabled
-                             This parameter must be a value of @ref FLASH_Sectors */
+   uint32_t
+     Sector; /*!< Initial FLASH sector to erase when Mass erase is disabled
+                  This parameter must be a value of @ref FLASH_Sectors */
 
-  uint32_t NbSectors;   /*!< Number of sectors to be erased.
-                             This parameter must be a value between 1 and (max number of sectors - value of Initial sector)*/
+   uint32_t NbSectors; /*!< Number of sectors to be erased.
+                            This parameter must be a value between 1 and (max
+                          number of sectors - value of Initial sector)*/
 
-  uint32_t VoltageRange;/*!< The device voltage range which defines the erase parallelism
-                             This parameter must be a value of @ref FLASHEx_Voltage_Range */
+   uint32_t VoltageRange; /*!< The device voltage range which defines the erase
+                             parallelism This parameter must be a value of @ref
+                             FLASHEx_Voltage_Range */
 
-} FLASH_EraseInitTypeDef;
-
+ } FLASH_EraseInitTypeDef;
 
 /**
   * @brief  FLASH Option Bytes Program structure definition
