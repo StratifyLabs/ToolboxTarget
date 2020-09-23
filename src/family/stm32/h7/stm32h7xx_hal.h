@@ -16,6 +16,7 @@ typedef int IRQn_Type;
 #define __HAL_LOCK(x)
 #define __HAL_UNLOCK(x)
 #define HAL_GetTick() 0
+#define UNUSED(x) (void)x
 
 #define __weak
 #define HAL_MAX_DELAY 100

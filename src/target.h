@@ -49,4 +49,7 @@ extern void target_family_populate_info();
 extern uint32_t target_family_erase_sector(uint32_t bank, uint32_t sector);
 extern uint32_t target_family_copy_ram_to_flash(uint32_t source_address, uint32_t flash_address, uint32_t nbyte);
 
+extern void *memcpy(void *dest, const void *src, __SIZE_TYPE__ nbyte);
+extern void *memset(void *dest, int value, __SIZE_TYPE__ nbyte);
+extern int memcmp(const void *dest, const void *src, int nbyte);
 #endif // TOOLBOXTARGET_TARGET_H

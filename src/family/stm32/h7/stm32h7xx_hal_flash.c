@@ -650,7 +650,8 @@ __weak void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue) {
   UNUSED(ReturnValue);
 
   /* NOTE : This function Should not be modified, when the callback is needed,
-            the HAL_FLASH_EndOfOperationCallback could be implemented in the user file
+            the HAL_FLASH_EndOfOperationCallback could be implemented in the
+     user file
    */
 }
 
@@ -668,7 +669,8 @@ __weak void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue)
   UNUSED(ReturnValue);
 
   /* NOTE : This function Should not be modified, when the callback is needed,
-            the HAL_FLASH_OperationErrorCallback could be implemented in the user file
+            the HAL_FLASH_OperationErrorCallback could be implemented in the
+     user file
    */
 }
 

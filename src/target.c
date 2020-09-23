@@ -51,7 +51,7 @@ void startup() {
 void target_wait(void) {
   // execute a software breakpoint to halt the processor
   // Toolbox will take over now that the operation is complete
-  //__BKPT(0);
+  __BKPT(0);
 }
 
 uint32_t erase_sector_group(uint32_t sector_group) {
@@ -105,22 +105,36 @@ uint32_t copy_ram_to_flash(uint32_t flash_address, uint32_t nbyte) {
   return 0;
 }
 
-typedef unsigned int size_t;
 
 // don't use memcpy
-void memcpy(void *dest, const void *src, size_t nbyte) {
+void *memcpy(void *dest, const void *src, __SIZE_TYPE__ nbyte) {
   uint8_t *cdest = dest;
   const uint8_t *csrc = src;
   for (int i = 0; i < nbyte; i++) {
     *cdest++ = *csrc++;
   }
+  return dest;
 }
 
-void memset(void *dest, uint8_t value, size_t nbyte) {
+void *memset(void *dest, int value, __SIZE_TYPE__ nbyte) {
   uint8_t *cdest = dest;
   for (int i = 0; i < nbyte; i++) {
     *cdest++ = value;
   }
+  return dest;
 }
 
-int memcmp(const void *dest, const void *src, int nbyte) { return 0; }
+int memcmp(const void *dest, const void *src, int nbyte) {
+  const uint8_t *cdest = dest;
+  const uint8_t *csrc = src;
+  for (int i = 0; i < nbyte; i++) {
+    if (*cdest != *csrc) {
+      if (*cdest > *csrc) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  }
+  return 0;
+}
