@@ -14,6 +14,8 @@ static uint32_t copy_ram_to_flash(uint32_t flash_address, uint32_t nbyte);
 extern uint32_t _stack_pointer;
 extern uint32_t _text;
 
+uint8_t m_ram_work_area[_TARGET_RAM_WORKAREA_SIZE];
+
 // this will be the first thing to show up in RAM (and the binary image)
 target_startup_t target_startup __attribute__((section(".startup"))) = {
   .api_version = TARGET_API_VERSION,
@@ -22,26 +24,28 @@ target_startup_t target_startup __attribute__((section(".startup"))) = {
   .stack_pointer = (uint32_t)&_stack_pointer,
   .erase_sector_group_function = (uint32_t)erase_sector_group,
   .copy_ram_to_flash_function = (uint32_t)copy_ram_to_flash,
-  .wait_function = (uint32_t)target_wait};
+  .wait_function = (uint32_t)target_wait,
+  .ram_work_address = (uint32_t)m_ram_work_area,
+  .ram_work_size = _TARGET_RAM_WORKAREA_SIZE};
 
 void target_populate_info(target_info_t *info);
 
 void startup() {
   // interrogate the device to see which in the family it is
-  target_family_populate_info(&m_target_info);
+  target_family_populate_info();
 
   // update the buffers according to the info provided by the target family
   target_startup.copy_ram_to_flash_buffer[0].address
-    = m_target_info.ram_work_address;
+    = target_startup.ram_work_address;
   target_startup.copy_ram_to_flash_buffer[0].size
-    = m_target_info.ram_work_size / 2;
+    = target_startup.ram_work_size / 2;
   target_startup.copy_ram_to_flash_buffer[0].ready
     = 0; // Toolbox will mark as ready
 
   target_startup.copy_ram_to_flash_buffer[1].address
-    = m_target_info.ram_work_address + m_target_info.ram_work_size / 2;
+    = target_startup.ram_work_address + target_startup.ram_work_size / 2;
   target_startup.copy_ram_to_flash_buffer[1].size
-    = m_target_info.ram_work_size / 2;
+    = target_startup.ram_work_size / 2;
   target_startup.copy_ram_to_flash_buffer[1].ready
     = 0; // Toolbox will mark as ready
 }
@@ -104,7 +108,6 @@ uint32_t copy_ram_to_flash(uint32_t flash_address, uint32_t nbyte) {
   // no errors
   return 0;
 }
-
 
 // don't use memcpy
 void *memcpy(void *dest, const void *src, __SIZE_TYPE__ nbyte) {
